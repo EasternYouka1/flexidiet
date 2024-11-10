@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+Pagina principal
+<!– instancia el urls de /login/urls.py del modulo de auth de django  -->
+<a href="{% url "login:logout" %}">cerrar sesion</a>
+{% endblock content %}
