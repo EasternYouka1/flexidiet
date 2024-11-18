@@ -20,6 +20,10 @@ INSTALLED_APPS = [
     'logros',
     'dieta',
     'info_usuarios'
+
+    
+    
+    
     
 ]
 
@@ -84,17 +88,17 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / "templates" / "assets",
+    BASE_DIR / "static",
 ]
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL= "info_usuarios:primer_setup"
-LOGOUT_REDIRECT_URL= "login:login"
+LOGIN_REDIRECT_URL = "info_usuarios:primer_setup"  
+LOGIN_URL = 'login'
+
 
 

@@ -1,0 +1,12 @@
+
+{% block content %}
+  <h1>Logros</h1>
+  <ul>
+    {% for logro in logros %}
+      <li>
+        <a href="{% url 'detalle_logro' logro.id %}">{{ logro.name }}</a>
+        - {{ logro.description }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -27,11 +27,14 @@ def primer_login(request):
                 info_usuario.objects.update_or_create(
                     user=request.user,
                     defaults={
-                        'edad': form.cleaned_data['edad'],
+                       'edad': form.cleaned_data['edad'],
                         'peso': form.cleaned_data['peso'],
                         'altura': form.cleaned_data['altura'],
                         'nivel_actividad': form.cleaned_data['nivel_actividad'],
                         'genero': form.cleaned_data['genero'],
+                        'litros_dia': form.cleaned_data['litros_dia'],
+                        'comidas_dia': form.cleaned_data['comidas_dia'],
+                        'preferencias_alimentarias': form.cleaned_data['preferencias_alimentarias'],
                         'primer_login': False
                     }
                 )
@@ -54,7 +57,10 @@ def primer_login(request):
                 'peso': user_info.peso,
                 'altura': user_info.altura,
                 'nivel_actividad': user_info.nivel_actividad,
-                'genero': user_info.genero
+                'genero': user_info.genero,
+                'litros_dia': user_info.litros_dia,
+                'comidas_dia': user_info.comidas_dia,
+                'preferencias_alimentarias': user_info.preferencias_alimentarias,
             }
             form = primer_setup(initial=initial_data)
         except info_usuario.DoesNotExist:
