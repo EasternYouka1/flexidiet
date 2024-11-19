@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+{% load static %}
+<div class="container mx-auto px-6 py-8">
+    <!-- Greeting and Challenge Section -->
+    <div class="flex justify-between items-start mb-8">
+        <h1 class="text-3xl font-semibold text-gray-800">
+            Hola {{ user.username }} 🌱
+        </h1>
+        <div class="bg-white rounded-lg shadow p-4">
+            <h3 class="font-bold text-lg mb-2">Desafío 🔥</h3>
+            <img src="{% static 'img/5-day-challenge.png' %}" alt="5 day challenge" class="w-full">
+        </div>
+    </div>
+    
+    <!-- Daily Activity -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold">Actividad diaria</h2>
+            <img src="{% static 'img/daily-activity.png' %}" alt="Daily Activity" class="h-6">
+        </div>
+        <p class="text-gray-600 mb-3">{{ totals.calories|default:0 }} Calorías consumidas - {{ calories_percent|floatformat:0 }}% de la meta diaria</p>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-green-600 h-2.5 rounded-full progress-bar" style="width: {{ calories_percent }}%"></div>
+        </div>
+    </div>
+
+    <!-- Daily Stats Grid -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <!-- Daily Recap -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <img src="{% static 'img/daily-recap.png' %}" alt="Daily Recap" class="h-6 mr-3">
+                <h2 class="text-xl font-bold">Recapitulación del día</h2>
+            </div>
+            <ul class="space-y-3">
+                <li class="flex items-center justify-between">
+                    <span>Carbohidratos</span>
+                    <span class="font-semibold">{{ totals.carbs|default:0 }}g (25%)</span>
+                </li>
+                <li class="flex items-center justify-between">
+                    <span>Proteínas</span>
+                    <span class="font-semibold">{{ totals.protein|default:0 }}g (25%)</span>
+                </li>
+                <li class="flex items-center justify-between">
+                    <span>Grasas</span>
+                    <span class="font-semibold">{{ totals.fat|default:0 }}g (25%)</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Daily Calories -->
+        <div class="bg-white rounded-lg shadow p-6">
+            <div class="flex items-center mb-4">
+                <img src="{% static 'img/daily-calories.png' %}" alt="Daily Calories" class="h-6 mr-3">
+                <h2 class="text-xl font-bold">Calorías diarias</h2>
+            </div>
+            {% for meal in daily_meals %}
+            <div class="flex justify-between items-center py-2 border-b last:border-0">
+                <span>{{ meal.get_meal_type_display }}: {{ meal.name }}</span>
+                <span class="font-semibold">{{ meal.calories }} Kcal</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Water Intake -->
+    <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-4">Tomar {{ goals.water_glasses }} vasos de agua</h2>
+        <p class="text-gray-600 mb-3">{{ water_intake.glasses }} de {{ goals.water_glasses }} vasos - {{ water_percent|floatformat:0 }}% Listo</p>
+        <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div class="bg-blue-600 h-2.5 rounded-full progress-bar" style="width: {{ water_percent }}%"></div>
+        </div>
+        <div class="text-sm text-gray-500 mt-2">
+            06:00am - 06:00pm
+        </div>
+    </div>
+</div>
+{% endblock %}
