@@ -1,9 +1,109 @@
-{% extends "base.html" %}
-
-{% block title %}Dashboard{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %}
 {% load static %}
 
-dieta
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="grid md:grid-cols-2 gap-8">
+        <!-- Formulario para agregar comida -->
+        <div>
+            <h2 class="text-2xl font-bold mb-6">Agregar Comida 🍽️</h2>
+            <div class="bg-white rounded-lg shadow p-6">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Nombre de la comida
+                        </label>
+                        {{ form.name }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Tipo de comida
+                        </label>
+                        {{ form.meal_type }}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Calorías
+                        </label>
+                        {{ form.calories }}
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Carbohidratos (g)
+                            </label>
+                            {{ form.carbs }}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Proteínas (g)
+                            </label>
+                            {{ form.protein }}
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Grasas (g)
+                            </label>
+                            {{ form.fat }}
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                        Agregar Comida
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Lista de comidas del día -->
+        <div>
+            <h2 class="text-2xl font-bold mb-6">Comidas del Día 📋</h2>
+            <div class="bg-white rounded-lg shadow p-6">
+                {% if meals %}
+                    <div class="space-y-4">
+                        {% for meal in meals %}
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-medium">{{ meal.name }}</h3>
+                                    <p class="text-sm text-gray-600">
+                                        {{ meal.get_meal_type_display }} - {{ meal.calories }} kcal
+                                    </p>
+                                    <p class="text-xs text-gray-500">
+                                        C: {{ meal.carbs }}g | P: {{ meal.protein }}g | G: {{ meal.fat }}g
+                                    </p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <a href="{% url 'dieta:editar_comida' meal.id %}" class="text-blue-600 hover:text-blue-800">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'dieta:eliminar_comida' meal.id %}" class="text-red-600 hover:text-red-800">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        
+                        <!-- Totales del día -->
+                        <div class="mt-6 pt-6 border-t">
+                            <h4 class="font-medium mb-2">Totales del día:</h4>
+                            <p>Calorías: {{ totals.calories|default:0 }} kcal</p>
+                            <p>Carbohidratos: {{ totals.carbs|default:0 }}g</p>
+                            <p>Proteínas: {{ totals.protein|default:0 }}g</p>
+                            <p>Grasas: {{ totals.fat|default:0 }}g</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-gray-500 text-center py-4">
+                        No has registrado comidas hoy
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

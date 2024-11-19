@@ -20,7 +20,6 @@ INSTALLED_APPS = [
     'logros',
     'dieta',
     'info_usuarios',
-    'desafio',
     'metas'
 
     

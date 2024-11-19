@@ -2,10 +2,19 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Dieta(models.Model):
+class Meal(models.Model):
+    MEAL_TYPES = [
+        ('desayuno', 'Desayuno'),
+        ('almuerzo', 'Almuerzo'),
+        ('cena', 'Cena'),
+        ('snack', 'Snack')
+    ]
+    
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    nombre_dieta = models.CharField(max_length=100)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
-    tipo_dieta = models.CharField(max_length=50)
-    activa = models.BooleanField(default=True)
+    name = models.CharField(max_length=200)
+    meal_type = models.CharField(max_length=20, choices=MEAL_TYPES)
+    calories = models.IntegerField()
+    carbs = models.FloatField()
+    protein = models.FloatField()
+    fat = models.FloatField()
+    date = models.DateField(auto_now_add=True)
