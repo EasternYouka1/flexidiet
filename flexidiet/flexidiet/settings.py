@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'info_usuarios.middleware.PrimerLoginMiddleware',]
 
 ROOT_URLCONF = 'flexidiet.urls'
 
